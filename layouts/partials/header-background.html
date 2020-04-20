@@ -1,7 +1,7 @@
-{{ if .Scratch.Get "background" }}
+{{if .Site.Params.cover}}
     <style type="text/css">
         .responsive-header-img {
-            background-image: url('{{ .Scratch.Get "background" }}');
+            background-image: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%,rgba(0,0,0,0.6) 100%), url({{ .Site.Params.cover | absURL }});
         }
     </style>
     <div class="outer site-header-background responsive-header-img">
