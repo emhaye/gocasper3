@@ -1,20 +1,47 @@
 <!DOCTYPE html>
-<html lang="{{ .Site.LanguageCode }}">
+<html lang="{{ with .Site.LanguageCode }}{{ . }}{{ else }}en-US{{ end }}" />
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-    {{ $title := print .Title " · " .Site.Title }}
-    {{ if .IsHome }}{{ $title = .Site.Title }}{{ end }}
-    <title>{{ $title }}</title>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  
+    <title>{{ if .IsHome }}{{ .Title }}{{ else }}{{ .Title }} &middot; {{ .Site.Title }}{{ end }}</title>
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <link rel="shortcut icon" href="{{ "images/favicon.ico" | absURL}}">
+	  <link rel="apple-touch-icon" href="{{ "images/apple-touch-icon.png" | absURL}}" />
+    <link rel="canonical" href="{{ .Permalink }}" />
+
+    {{ if .IsPage }} <meta name="description" content="{{ .Description | default (substr .Summary 0 160) }}" /> {{ else }}
+    <meta name="description" content="{{ .Site.Params.metadescription | default .Site.Params.description }}" /> {{ end }}
+
+    <!--
+    {{ if .Keywords }}<meta name="keywords" content="{{ with .Keywords }}{{ delimit .  ","  }}{{ else }}{{ default .Site.Params.keywords }}{{ end }}">{{ end }}
+    -->
+    <meta name="keywords" content="{{ if .IsPage}}{{ range $index, $tag := .Params.tags }}{{ $tag }}, {{ end }}{{ else }}{{ with .Keywords }}{{ delimit .  ","  }}{{ else }}{{ default .Site.Params.keywords }}{{ end }}{{end}}" />
+
+    {{ range $data := .Site.Params.metaTags }}<meta {{ range $key, $value := $data }} {{ $key | safeHTMLAttr }}="{{ $value | safeHTMLAttr }}" {{ end }} /> {{ end }}
+
+    {{ "<!-- Stylesheets -->" | safeHTML }}
     {{ $styles := resources.Get "scss/main.scss" | resources.ExecuteAsTemplate "style.main.scss" . | toCSS | minify | fingerprint }}
     <link rel="stylesheet" href="{{ $styles.Permalink }}" />
+    
+    {{ if .Site.Params.hjsStyle }}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/{{ .Site.Params.hjsStyle }}.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    {{ if or .Site.Params.hjsExtraLanguages .Params.hjsExtraLanguages }}
+        {{ range $index, $language := (union .Site.Params.hjsExtraLanguages .Params.hjsExtraLanguages) }}
+            <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/{{ $language }}.min.js"></script>
+        {{ end }}
+    {{ end }}
+    <script>hljs.initHighlightingOnLoad();</script>
+    {{end}}
+    {{ range .Site.Params.customCSS }} <link rel="stylesheet" href="{{ . | absURL }}" /> {{ end }}
 
+    {{ if .Site.Params.RSSLink}}<link href="{{.Site.Params.RSSLink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" /> {{else}}{{ if eq .URL "/" }}<link href="{{ "index.xml" | absURL}}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" /> {{ end }} {{ end }}
 </head>
+
 <body class="{{ block "body_class" . }} {{ end }}">
 
     <div class="site-wrapper">
