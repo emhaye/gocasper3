@@ -6,11 +6,11 @@
             {{- partial "read-next.html" . -}}
 
             {{ with .PrevInSection}}
-                {{- partial "post-card.html" (dict "context" . "index" 1) -}}
+                {{- partial "post-card.html" . -}}
             {{end}}
 
             {{ with .NextInSection}}
-                {{- partial "post-card.html" (dict "context" . "index" 1) -}}
+                {{- partial "post-card.html" . -}}
             {{end}}
         </div>
     </div>
