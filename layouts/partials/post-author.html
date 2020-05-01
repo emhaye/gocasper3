@@ -2,17 +2,19 @@
 <ul class="author-list">
     <li class="author-list-item">
         <div class="author-card">
-            <div class="author-profile-image">
-                <img class="author-profile-image" src="{{ $author.image }}">
-            </div>
+            <img class="author-profile-image" src="{{ $author.image }}" alt="{{ $author.fullname }}" />
             <div class="author-info">
-                <div class="author-info">
+                {{ if $author.bio }}
+                <div class="bio">
                     <h2>{{ $author.fullname }}</h2>
+                    <p>{{ $author.bio }}</p>
+                    <p><a href="/authors/{{ $author.name }}">More posts</a> by {{ $author.fullname }}.</p>
                 </div>
+                {{ end }}
             </div>
         </div>
-        <a href="/authors/{{ $author.name }}">
-            <img class="author-avatar author-profile-image" src="{{ $author.image }}">
+        <a href="/authors/{{ $author.name }}" class="author-avatar">
+            <img class="author-profile-image" src="{{ $author.image }}" alt="{{ $author.fullname }}" />
         </a>
     </li>
 </ul>
