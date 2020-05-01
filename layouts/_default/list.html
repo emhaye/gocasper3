@@ -2,18 +2,14 @@
 
 {{ define "main" }}
 
-<header class="site-header">
+<header class="site-header site-archive-header">
     {{- partial "site-header.html" $ -}}
 
     {{- partial "header-background.html" $ -}}
         <div class="inner site-header-content">
-            <h1 class="site-title">{{ .Title }}</h1>
+            <h1 class="site-title">{{ .Title | humanize }}</h1>
             <h2 class="site-description">
-                {{ if .Param "description" }}
-                    {{ .Param "description" }}
-                {{ else }}
-                    A collection of {{ len .Pages }} post{{ if gt (len .Pages) 1 }}s{{ end }}
-                {{ end }}
+                A collection of {{ len .Pages }} post{{ if gt (len .Pages) 1 }}s{{ end }}
             </h2>
         </div>
     </div>
@@ -23,7 +19,7 @@
     <div class="inner posts">
         <div class="post-feed">
             {{ range $index, $element := .Pages }}
-                {{- partial "post-card.html" (dict "context" . "index" $index "home" $.IsHome) -}}
+                {{ partial "post-card.html" . }}
             {{ end }}
         </div>
     </div>
