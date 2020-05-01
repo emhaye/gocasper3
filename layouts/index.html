@@ -24,9 +24,9 @@
 <main id="site-main" class="site-main outer">
     <div class="inner posts">
         <div class="post-feed">
-            {{ $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
+            {{ $pages := where site.RegularPages "Type" "post" }}
             {{ range $index, $element := $pages }}
-                {{- partial "post-card.html" (dict "context" . "index" $index "home" $.IsHome) -}}
+                {{ partial "post-card.html" . }}
             {{ end }}
         </div>
     </div>

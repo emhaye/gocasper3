@@ -23,9 +23,8 @@
 
     {{ range $data := .Site.Params.metaTags }}<meta {{ range $key, $value := $data }} {{ $key | safeHTMLAttr }}="{{ $value | safeHTMLAttr }}" {{ end }} /> {{ end }}
 
-    {{ "<!-- Stylesheets -->" | safeHTML }}
-    {{ $styles := resources.Get "scss/main.scss" | resources.ExecuteAsTemplate "style.main.scss" . | toCSS | minify | fingerprint }}
-    <link rel="stylesheet" href="{{ $styles.Permalink }}" />
+    <link rel="stylesheet" href="/built/screen.css">
+    <link rel="stylesheet" href="/css/casper-three.css">
     
     {{ if .Site.Params.hjsStyle }}
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/{{ .Site.Params.hjsStyle }}.min.css">
