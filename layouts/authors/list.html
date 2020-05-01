@@ -1,0 +1,21 @@
+{{ define "body_class" }} author-template  {{ end }}
+
+{{ define "main" }}
+
+
+  {{ partial "header-author" . }}
+
+
+
+<main id="site-main" class="site-main outer">
+    <div class="inner posts">
+        <div class="post-feed">
+            {{ range $index, $element := .Pages }}
+                {{ partial "post-card" . }}
+            {{ end }}
+        </div>
+    </div>
+</main>
+
+
+{{ end }}

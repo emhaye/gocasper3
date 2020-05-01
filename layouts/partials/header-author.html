@@ -1,0 +1,38 @@
+
+{{$author := (index $.Site.Params.authors 0)}}
+<header class="site-archive-header">
+    {{ partial "site-header" . }}
+    <div class="outer site-header-background no-image">
+        <div class="inner">
+            <div class="site-header-content author-header">
+                <img class="author-profile-image" src="{{ $author.image }}" alt="{{ $author.fullname }}" />
+                <div class="author-header-content">
+                    <h1 class="site-title">{{ $author.fullname }}</h1>
+                    {{ if $author.bio }}
+                        <h2 class="author-bio">{{ $author.bio }}</h2>
+                    {{ end }}
+                    <div class="author-meta">
+                        {{ if $author.location }}
+                            <div class="author-location">{{ $author.location }}</div>
+                        {{ end }}
+                        <div class="author-stats">
+                            {{ len .Pages }} post{{ if gt (len .Pages) 1 }}s{{ end }}
+                        </div>
+                        {{ if $author.website }}
+                            <span class="author-social-link"><a href="{{ $author.website }}" target="_blank" rel="noopener">Website</a></span>
+                        {{ end }}
+                        {{ if $author.github }}
+                            <span class="author-social-link"><a href="https://github.com/{{ $author.github }}" target="_blank" rel="noopener">Github</a></span>
+                        {{ end }}
+                        {{ if $author.twitter }}
+                            <span class="author-social-link"><a href="https://twitter.com/{{ $author.twitter }}" target="_blank" rel="noopener">Twitter</a></span>
+                        {{ end }}
+                        {{ if $author.facebook }}
+                            <span class="author-social-link"><a href="https://facebook.com/{{ $author.facebook }}" target="_blank" rel="noopener">Facebook</a></span>
+                        {{ end }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

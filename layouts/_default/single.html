@@ -28,15 +28,14 @@
 
                 <div class="post-full-byline">
                     <section class="post-full-byline-content">
-
-                        {{ if .Param "author" }}
-                            {{- partial "post-author.html" . -}}
-                        {{ end }}
-
+                        {{$author := (index $.Site.Params.authors 0)}}
+                        {{ partial "post-author" . }}
                         <section class="post-full-byline-meta">
-                            {{ if .Param "author" }}
-                                <h4 class="author-name">{{ .Param "author" }}</h4>
-                            {{ end }}
+                            <h4 class="author-name">
+                                <a href="/authors/{{ $author.name }}">
+                                    {{ $author.fullname }}
+                                </a>
+                            </h4>
                             <div class="byline-meta-content">
                                 <time class="byline-meta-date" datetime="{{.Date.Format "2006-31-01"}}">{{.Date.Format "2 January 2006"}}</time>
                                 <span class="byline-reading-time"><span class="bull">&bull;</span> {{ .ReadingTime }} min read</span>
